@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pendaftaran OSN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #004D98, #A50044);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 420px;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    }
+
+    h2 {
+      text-align: center;
+      color: #004D98;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 12px;
+      display: block;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 11px;
+      margin-top: 6px;
+      border-radius: 7px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #004D98;
+    }
+
+    button {
+      margin-top: 22px;
+      background: #A50044;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #8b0039;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h2>Pendaftaran OSN</h2>
+
+    <!-- FORM TERHUBUNG KE FORMSPREE -->
+    <form action="https://formspree.io/f/mjgggvga" method="POST">
+
+      <label>Nama Lengkap</label>
+      <input type="text" name="nama" placeholder="Nama lengkap" required>
+
+      <label>Nomor HP / WhatsApp</label>
+      <input type="tel" name="no_hp" placeholder="08xxxxxxxxxx" required>
+
+      <label>Jenjang</label>
+      <select id="jenjang" required>
+        <option value="">-- Pilih Jenjang --</option>
+        <option value="X">X</option>
+        <option value="XI">XI</option>
+        <option value="XII">XII</option>
+      </select>
+
+      <label>Kelas</label>
+      <select id="kelas" name="kelas" required>
+        <option value="">-- Pilih Kelas --</option>
+      </select>
+
+      <label>Bidang OSN</label>
+      <select name="mapel" required>
+        <option value="">-- Pilih Bidang --</option>
+        <option>Matematika</option>
+        <option>Fisika</option>
+        <option>Kimia</option>
+        <option>Biologi</option>
+        <option>Informatika</option>
+        <option>Astronomi</option>
+        <option>Kebumian</option>
+      </select>
+
+      <button type="submit">Daftar</button>
+
+    </form>
+  </div>
+
+  <script>
+    const jenjang = document.getElementById("jenjang");
+    const kelas = document.getElementById("kelas");
+
+    jenjang.addEventListener("change", () => {
+      kelas.innerHTML = '<option value="">-- Pilih Kelas --</option>';
+
+      if (!jenjang.value) return;
+
+      for (let i = 1; i <= 11; i++) {
+        const option = document.createElement("option");
+        option.value = jenjang.value + "." + i;
+        option.textContent = jenjang.value + "." + i;
+        kelas.appendChild(option);
+      }
+    });
+  </script>
+
+</body>
+</html>
