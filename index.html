@@ -1,134 +1,503 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Pendaftaran OSN</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(135deg, #004D98, #A50044);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .container {
-      background: #ffffff;
-      width: 100%;
-      max-width: 420px;
-      padding: 25px;
-      border-radius: 14px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-    }
-
-    h2 {
-      text-align: center;
-      color: #004D98;
-      margin-bottom: 20px;
-    }
-
-    label {
-      font-weight: 600;
-      margin-top: 12px;
-      display: block;
-    }
-
-    input, select, button {
-      width: 100%;
-      padding: 11px;
-      margin-top: 6px;
-      border-radius: 7px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
-
-    input:focus, select:focus {
-      outline: none;
-      border-color: #004D98;
-    }
-
-    button {
-      margin-top: 22px;
-      background: #A50044;
-      color: #fff;
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: #8b0039;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4b6cb7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>TabunganKu - Target Menabung</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
 </head>
-
 <body>
+    <!-- App Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <button class="menu-btn" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="app-title">
+                <i class="fas fa-piggy-bank"></i>
+                <span>TabunganKu</span>
+            </h1>
+            <button class="add-btn" id="quick-add-btn">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </header>
 
-  <div class="container">
-    <h2>Pendaftaran OSN</h2>
+    <!-- Navigation Menu -->
+    <nav class="nav-menu" id="nav-menu">
+        <div class="nav-header">
+            <h3><i class="fas fa-user-circle"></i> Menu</h3>
+            <button class="close-nav" id="close-nav">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="nav-items">
+            <li>
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-item" data-page="targets">
+                    <i class="fas fa-bullseye"></i>
+                    <span>Target Saya</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-item" data-page="add-target">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Tambah Target</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-item" data-page="transactions">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Transaksi</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-item" data-page="stats">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Statistik</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-item" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Pengaturan</span>
+                </a>
+            </li>
+        </ul>
+        <div class="nav-footer">
+            <button class="btn btn-secondary" id="export-nav-btn">
+                <i class="fas fa-download"></i> Backup Data
+            </button>
+        </div>
+    </nav>
 
-    <!-- FORM TERHUBUNG KE FORMSPREE -->
-    <form action="https://formspree.io/f/mjgggvga" method="POST">
+    <!-- Main Content Area -->
+    <main class="main-content" id="main-content">
+        <!-- Dashboard Page -->
+        <section class="page active" id="dashboard-page">
+            <div class="welcome-banner">
+                <h2>Selamat Datang!</h2>
+                <p>Kelola tabungan Anda dengan mudah</p>
+            </div>
 
-      <label>Nama Lengkap</label>
-      <input type="text" name="nama" placeholder="Nama lengkap" required>
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Tabungan</p>
+                        <p class="stat-value" id="mobile-total-savings">Rp 0</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Target Aktif</p>
+                        <p class="stat-value" id="mobile-active-targets">0</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Tercapai</p>
+                        <p class="stat-value" id="mobile-completed-targets">0</p>
+                    </div>
+                </div>
+            </div>
 
-      <label>Nomor HP / WhatsApp</label>
-      <input type="tel" name="no_hp" placeholder="08xxxxxxxxxx" required>
+            <div class="section-title">
+                <h3><i class="fas fa-fire"></i> Target Prioritas</h3>
+                <a href="#" class="see-all" data-page="targets">Lihat Semua</a>
+            </div>
 
-      <label>Jenjang</label>
-      <select id="jenjang" required>
-        <option value="">-- Pilih Jenjang --</option>
-        <option value="X">X</option>
-        <option value="XI">XI</option>
-        <option value="XII">XII</option>
-      </select>
+            <div class="priority-targets" id="priority-targets">
+                <!-- Target prioritas akan dimuat di sini -->
+                <div class="empty-state">
+                    <i class="fas fa-bullseye"></i>
+                    <p>Belum ada target menabung</p>
+                    <button class="btn btn-primary" id="add-first-target">
+                        <i class="fas fa-plus"></i> Tambah Target Pertama
+                    </button>
+                </div>
+            </div>
 
-      <label>Kelas</label>
-      <select id="kelas" name="kelas" required>
-        <option value="">-- Pilih Kelas --</option>
-      </select>
+            <div class="quick-actions">
+                <button class="quick-action-btn" data-page="add-target">
+                    <div class="action-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <span>Tambah Target</span>
+                </button>
+                
+                <button class="quick-action-btn" data-page="transactions">
+                    <div class="action-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <span>Transaksi</span>
+                </button>
+                
+                <button class="quick-action-btn" id="quick-stats-btn">
+                    <div class="action-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <span>Statistik</span>
+                </button>
+            </div>
+        </section>
 
-      <label>Bidang OSN</label>
-      <select name="mapel" required>
-        <option value="">-- Pilih Bidang --</option>
-        <option>Matematika</option>
-        <option>Fisika</option>
-        <option>Kimia</option>
-        <option>Biologi</option>
-        <option>Informatika</option>
-        <option>Astronomi</option>
-        <option>Kebumian</option>
-      </select>
+        <!-- Targets Page -->
+        <section class="page" id="targets-page">
+            <div class="page-header">
+                <h2><i class="fas fa-bullseye"></i> Target Saya</h2>
+                <div class="header-actions">
+                    <button class="filter-btn" id="targets-filter-btn">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                    <button class="sort-btn" id="targets-sort-btn">
+                        <i class="fas fa-sort-amount-down"></i>
+                    </button>
+                </div>
+            </div>
 
-      <button type="submit">Daftar</button>
+            <div class="filter-panel" id="filter-panel">
+                <div class="filter-group">
+                    <label>Status:</label>
+                    <div class="filter-options">
+                        <button class="filter-option active" data-filter="all">Semua</button>
+                        <button class="filter-option" data-filter="active">Aktif</button>
+                        <button class="filter-option" data-filter="completed">Tercapai</button>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label>Urutkan:</label>
+                    <div class="filter-options">
+                        <button class="filter-option active" data-sort="date-asc">Tanggal Terdekat</button>
+                        <button class="filter-option" data-sort="progress-desc">Progress Terbanyak</button>
+                        <button class="filter-option" data-sort="amount-asc">Jumlah Terkecil</button>
+                    </div>
+                </div>
+            </div>
 
-    </form>
-  </div>
+            <div class="targets-list-mobile" id="mobile-targets-list">
+                <!-- Daftar target mobile akan dimuat di sini -->
+            </div>
+        </section>
 
-  <script>
-    const jenjang = document.getElementById("jenjang");
-    const kelas = document.getElementById("kelas");
+        <!-- Add Target Page -->
+        <section class="page" id="add-target-page">
+            <div class="page-header">
+                <h2><i class="fas fa-plus-circle"></i> Tambah Target Baru</h2>
+            </div>
 
-    jenjang.addEventListener("change", () => {
-      kelas.innerHTML = '<option value="">-- Pilih Kelas --</option>';
+            <form id="mobile-saving-form" class="mobile-form">
+                <div class="form-group">
+                    <label for="mobile-target-name">
+                        <i class="fas fa-tag"></i> Nama Target
+                    </label>
+                    <input type="text" id="mobile-target-name" placeholder="Contoh: Liburan, Laptop Baru" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="mobile-target-amount">
+                            <i class="fas fa-money-bill-wave"></i> Target (Rp)
+                        </label>
+                        <input type="number" id="mobile-target-amount" placeholder="1000000" min="1000" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="mobile-current-amount">
+                            <i class="fas fa-coins"></i> Saat Ini (Rp)
+                        </label>
+                        <input type="number" id="mobile-current-amount" placeholder="0" min="0" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mobile-target-date">
+                        <i class="fas fa-calendar-alt"></i> Target Tanggal
+                    </label>
+                    <input type="date" id="mobile-target-date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mobile-description">
+                        <i class="fas fa-sticky-note"></i> Catatan (Opsional)
+                    </label>
+                    <textarea id="mobile-description" rows="3" placeholder="Tambahkan catatan tentang target ini..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-save"></i> Simpan Target
+                </button>
+                
+                <button type="button" class="btn btn-secondary btn-block" id="cancel-add">
+                    <i class="fas fa-times"></i> Batal
+                </button>
+            </form>
+        </section>
 
-      if (!jenjang.value) return;
+        <!-- Transactions Page -->
+        <section class="page" id="transactions-page">
+            <div class="page-header">
+                <h2><i class="fas fa-exchange-alt"></i> Transaksi</h2>
+                <div class="header-actions">
+                    <button class="btn btn-sm" id="add-transaction-btn">
+                        <i class="fas fa-plus"></i> Baru
+                    </button>
+                </div>
+            </div>
 
-      for (let i = 1; i <= 11; i++) {
-        const option = document.createElement("option");
-        option.value = jenjang.value + "." + i;
-        option.textContent = jenjang.value + "." + i;
-        kelas.appendChild(option);
-      }
-    });
-  </script>
+            <div class="transaction-form" id="transaction-form-mobile">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="mobile-target-select">Target</label>
+                        <select id="mobile-target-select" required>
+                            <option value="">Pilih target...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="mobile-transaction-type">Jenis</label>
+                        <select id="mobile-transaction-type" required>
+                            <option value="add">Tambah</option>
+                            <option value="subtract">Kurangi</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mobile-transaction-amount">Jumlah (Rp)</label>
+                    <input type="number" id="mobile-transaction-amount" placeholder="50000" min="1000" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mobile-transaction-note">Catatan</label>
+                    <input type="text" id="mobile-transaction-note" placeholder="Contoh: Uang THR, Gaji">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-success" id="submit-transaction">
+                        <i class="fas fa-check"></i> Simpan
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="cancel-transaction">
+                        Batal
+                    </button>
+                </div>
+            </div>
 
+            <div class="recent-transactions" id="recent-transactions">
+                <!-- Daftar transaksi akan dimuat di sini -->
+                <div class="empty-state">
+                    <i class="fas fa-exchange-alt"></i>
+                    <p>Belum ada transaksi</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Page -->
+        <section class="page" id="stats-page">
+            <div class="page-header">
+                <h2><i class="fas fa-chart-pie"></i> Statistik</h2>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-card-large">
+                    <div class="stat-header">
+                        <h4>Progress Rata-rata</h4>
+                        <span class="stat-percent" id="mobile-avg-progress">0%</span>
+                    </div>
+                    <div class="progress-bar-large">
+                        <div class="progress-fill" id="mobile-progress-bar"></div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <i class="fas fa-calendar-day"></i>
+                        <div>
+                            <p class="stat-label">Target Terdekat</p>
+                            <p class="stat-value" id="mobile-nearest-target">-</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <i class="fas fa-money-bill-trend-up"></i>
+                        <div>
+                            <p class="stat-label">Total Target</p>
+                            <p class="stat-value" id="mobile-total-target">Rp 0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h4>Distribusi Tabungan</h4>
+                    <div class="chart-placeholder" id="savings-chart">
+                        <!-- Chart akan dibuat di sini -->
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #4b6cb7;"></span>
+                                <span>Aktif</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #00b09b;"></span>
+                                <span>Tercapai</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Page -->
+        <section class="page" id="settings-page">
+            <div class="page-header">
+                <h2><i class="fas fa-cog"></i> Pengaturan</h2>
+            </div>
+
+            <div class="settings-list">
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <i class="fas fa-database"></i>
+                        <div>
+                            <h4>Kelola Data</h4>
+                            <p>Ekspor atau impor data tabungan</p>
+                        </div>
+                    </div>
+                    <div class="setting-actions">
+                        <button class="btn btn-sm btn-secondary" id="mobile-export-btn">
+                            <i class="fas fa-download"></i> Ekspor
+                        </button>
+                        <button class="btn btn-sm btn-secondary" id="mobile-import-btn">
+                            <i class="fas fa-upload"></i> Impor
+                        </button>
+                        <input type="file" id="mobile-import-file" accept=".json" style="display: none;">
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <i class="fas fa-bell"></i>
+                        <div>
+                            <h4>Notifikasi</h4>
+                            <p>Aktifkan pengingat target</p>
+                        </div>
+                    </div>
+                    <div class="setting-actions">
+                        <label class="switch">
+                            <input type="checkbox" id="notifications-toggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <i class="fas fa-moon"></i>
+                        <div>
+                            <h4>Tema Gelap</h4>
+                            <p>Ubah tampilan aplikasi</p>
+                        </div>
+                    </div>
+                    <div class="setting-actions">
+                        <label class="switch">
+                            <input type="checkbox" id="dark-mode-toggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item danger">
+                    <div class="setting-info">
+                        <i class="fas fa-trash-alt"></i>
+                        <div>
+                            <h4>Hapus Semua Data</h4>
+                            <p>Reset aplikasi ke kondisi awal</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-danger" id="mobile-reset-btn">
+                        <i class="fas fa-trash"></i> Reset
+                    </button>
+                </div>
+
+                <div class="app-info">
+                    <h4>TabunganKu v1.0</h4>
+                    <p>Aplikasi pengelola tabungan pribadi</p>
+                    <p class="version">© 2024 - Dibuat dengan ❤️</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-tab active" data-page="dashboard">
+            <i class="fas fa-home"></i>
+            <span>Beranda</span>
+        </a>
+        <a href="#" class="nav-tab" data-page="targets">
+            <i class="fas fa-bullseye"></i>
+            <span>Target</span>
+        </a>
+        <a href="#" class="nav-tab" data-page="transactions">
+            <i class="fas fa-exchange-alt"></i>
+            <span>Transaksi</span>
+            <span class="badge" id="transactions-badge">0</span>
+        </a>
+        <a href="#" class="nav-tab" data-page="stats">
+            <i class="fas fa-chart-pie"></i>
+            <span>Statistik</span>
+        </a>
+        <a href="#" class="nav-tab" data-page="settings">
+            <i class="fas fa-cog"></i>
+            <span>Lainnya</span>
+        </a>
+    </nav>
+
+    <!-- Toast Notification -->
+    <div id="mobile-toast" class="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span class="toast-message">Operasi berhasil!</span>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirm-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Konfirmasi</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-message">Apakah Anda yakin?</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="modal-cancel">Batal</button>
+                <button class="btn btn-danger" id="modal-confirm">Ya</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
